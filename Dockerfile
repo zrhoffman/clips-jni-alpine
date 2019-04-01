@@ -29,9 +29,7 @@ RUN set -e;\
     apk del .build-deps;\
 \
     apk add --no-cache /home/docker/packages/tmp/x86_64/clips-jni-6.40-r0.apk;\
-    rm -rf /home/docker/.abuild /home/docker/packages /tmp/clips-jni;\
-\
-    mkdir /app;
+    rm -rf /home/docker/.abuild /home/docker/packages /tmp/clips-jni;
 
 USER docker
 
