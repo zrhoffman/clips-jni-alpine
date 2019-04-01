@@ -1,0 +1,25 @@
+--- makefile.lnx.orig
++++ makefile.lnx
+@@ -9,7 +9,13 @@
+ # Notes:
+ #    -fPIC option needed for 64-bit systems
+ 
+-all: ubuntu
++core_dir = ${cor_dir}
++VPATH = $(core_dir)
++
++all: alpine
++
++alpine : JAVA_HOME = /usr/lib/jvm/default-jvm
++alpine : libCLIPSJNI.so
+ 
+ ubuntu : JAVA_HOME = /usr/lib/jvm/default-java
+ ubuntu : libCLIPSJNI.so
+@@ -65,6 +71,7 @@
+ .c.o :
+ 	gcc -c -std=c99 -O3 -fPIC -DLINUX \
+ 	    -I$(JAVA_INCLUDE) -I$(JAVA_INCLUDE_OS) \
++		-I$(core_dir) \
+ 	    -fno-strict-aliasing -Wstrict-aliasing \
+ 	    -Wall -Wundef -Wpointer-arith -Wshadow \
+ 	    -Winline -Wmissing-declarations -Wredundant-decls \

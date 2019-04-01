@@ -1,0 +1,33 @@
+# Maintainer: Zach Hoffman <zach@zrhoffman.net>
+pkgname=clips-jni
+pkgver=6.40
+major_ver=6
+minor_ver=40
+pkgrel=0
+pkgdesc="CLIPS JNI 6.4 Beta, a Java Native Interface for CLIPS"
+url="http://www.clipsrules.net/CLIPSJNI.html"
+arch="all"
+license="none"
+depends="openjdk8-jre"
+makedepends="openjdk8 gcc make"
+source="https://downloads.sourceforge.net/clipsrules/CLIPS/${major_ver}.${minor_ver}_Beta_3/clips_jni_${major_ver}${minor_ver}.tar.gz
+        https://downloads.sourceforge.net/clipsrules/CLIPS/${major_ver}.${minor_ver}_Beta_3/clips_core_source_${major_ver}${minor_ver}.tar.gz
+        "
+
+builddir="$srcdir/"
+
+build () {
+	cd "$builddir"/CLIPSJNI/library-src
+    <../../../makefile.lnx.patch patch makefile.lnx || return 1
+    make -f makefile.lnx core_dir=../../clips_core_source_${major_ver}${minor_ver}/core || return 1
+    mv libCLIPSJNI.so ..
+}
+
+package() {
+	cd "$builddir"/CLIPSJNI
+    install -Dm644 CLIPSJNI.jar "$pkgdir"/usr/share/$pkgname/CLIPSJNI.jar
+    install -Dm755 libCLIPSJNI.so "$pkgdir"/usr/share/$pkgname/libCLIPSJNI.so
+}
+
+sha512sums="36cd40b6fe2d0b5bfb2fc6a4edbb9e61c7e6f8df75474f1dc2921f660d340f6468176f4bf37cb9942b52afeb9fc2ee5997d7916983d1df7333b289fe91449719  clips_jni_640.tar.gz
+5ee18bfd90cbcf6f55cda912a03b0be89bce668c22428c11a8642808bea272a9c726ba1ea9f1c3855dfad25f74252f97d6244d34953b487b6d8d4d165a92a130  clips_core_source_640.tar.gz"
