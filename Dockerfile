@@ -37,9 +37,4 @@ RUN set -o errexit;\
 
 USER docker
 
-CMD [\
-        "java",\
-        "-Djava.library.path=/usr/share/clips-jni",\
-        "-jar",\
-        "/usr/share/clips-jni/CLIPSJNI.jar"\
-    ]
+CMD ["java","-jar","/usr/share/clips-jni/CLIPSJNI.jar"]
