@@ -6,18 +6,22 @@ LABEL   name="CLIPS JNI Alpine"\
 COPY clips-jni /tmp/clips-jni
 
 RUN set -o errexit;\
-    adduser -Ds/bin/sh -u1000 docker;\
-    chown -R docker:docker /tmp/clips-jni;\
 \
     #To get package index
     apk upgrade;\
 \
-    #We only need these dependencies while building the CLIPS JNI library
+    # We only need these dependencies while building the CLIPS JNI library
     apk add --no-cache --virtual .build-deps\
         abuild\
         gcc;\
+\
+    adduser -Ds/bin/sh -u1000 docker;\
+    chown -R docker:docker /tmp/clips-jni;\
+\
+    # The docker user needs to be in the abuild group to use the abuild command
     adduser docker abuild;\
 \
+    # Build the package
     su - docker -c'\
         set -o errexit;\
         abuild-keygen -a;\
