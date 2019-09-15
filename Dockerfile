@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM alpine:3
 
 LABEL   name="CLIPS JNI Alpine"\
         version="0.0"
