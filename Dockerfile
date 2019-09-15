@@ -30,9 +30,9 @@ RUN set -o errexit;\
     ';\
 \
     cp /home/docker/.abuild/docker-*.rsa.pub /etc/apk/keys/;\
-    apk del .build-deps;\
+    apk add --no-cache /home/docker/packages/tmp/x86_64/clips-jni-*.*.apk;\
 \
-    apk add --no-cache /home/docker/packages/tmp/x86_64/clips-jni-6.40-r0.apk;\
+    apk del .build-deps;\
     rm -rf /home/docker/.abuild /home/docker/packages /tmp/clips-jni;
 
 USER docker
