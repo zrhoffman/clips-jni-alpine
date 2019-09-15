@@ -5,7 +5,7 @@ LABEL   name="CLIPS JNI Alpine"\
 
 COPY clips-jni /tmp/clips-jni
 
-RUN set -e;\
+RUN set -o errexit;\
     adduser -Ds/bin/sh -u1000 docker;\
     chown -R docker:docker /tmp/clips-jni;\
 \
@@ -19,7 +19,7 @@ RUN set -e;\
     adduser docker abuild;\
 \
     su - docker -c'\
-        set -e;\
+        set -o errexit;\
         abuild-keygen -a;\
         cd /tmp/clips-jni;\
         abuild -r;\
